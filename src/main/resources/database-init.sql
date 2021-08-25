@@ -3,11 +3,11 @@ CREATE SCHEMA `budgetbox` DEFAULT CHARACTER SET utf8;
 DROP TABLE IF EXISTS generic_food;
 
 CREATE TABLE generic_food (
-                              id INT PRIMARY KEY AUTO_INCREMENT,
-                              food_name VARCHAR(50),
-                              scientific_name VARCHAR(50),
-                              main_group VARCHAR(50),
-                              sub_group VARCHAR(60)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    food_name VARCHAR(50),
+    scientific_name VARCHAR(50),
+    main_group VARCHAR(50),
+    sub_group VARCHAR(60)
 );
 
 TRUNCATE TABLE generic_food;
