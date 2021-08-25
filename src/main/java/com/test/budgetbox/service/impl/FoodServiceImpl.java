@@ -3,10 +3,11 @@ package com.test.budgetbox.service.impl;
 import com.test.budgetbox.entity.Food;
 import com.test.budgetbox.repository.FoodRepository;
 import com.test.budgetbox.service.FoodService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,8 +25,12 @@ public class FoodServiceImpl implements FoodService {
 		return food.orElse(null);
 	}
 
-	public List<Food> findAll() {
-		return foodRepository.findAll();
+	public Page<Food> findByName(String name, Pageable pageable) {
+		return foodRepository.findByName(name, pageable);
+	}
+
+	public Page<Food> findAll(Pageable pageable) {
+		return foodRepository.findAll(pageable);
 	}
 
 	public Food save(Food food) {

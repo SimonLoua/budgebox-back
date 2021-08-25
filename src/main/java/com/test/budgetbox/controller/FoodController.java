@@ -2,15 +2,18 @@ package com.test.budgetbox.controller;
 
 import com.test.budgetbox.entity.Food;
 import com.test.budgetbox.service.FoodService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("food")
 @Transactional
-public class FoodController {
+public class FoodController extends AbstractController{
 
 	private final FoodService foodService;
 
@@ -24,8 +27,18 @@ public class FoodController {
 	}
 
 	@GetMapping("/all")
-	public List<Food> geFoods() {
-		return foodService.findAll();
+	public Page<Food> geFoods(@RequestParam(name = "pageNumber", defaultValue = DEFAULT_PAGE_NUMBER) int pageNumber,
+	                              @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE) int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return foodService.findAll(pageable);
+	}
+
+	@GetMapping("/search")
+	public Page<Food> searchFood(@RequestParam(name = "name") String name,
+	                             @RequestParam(name = "pageNumber", defaultValue = DEFAULT_PAGE_NUMBER) int pageNumber,
+	                             @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE) int pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		return foodService.findByName(name, pageable);
 	}
 
 	@PostMapping("/save")
